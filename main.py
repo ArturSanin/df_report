@@ -1,0 +1,3 @@
+"""
+    Begin of first project.
+"""
