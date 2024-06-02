@@ -20,3 +20,11 @@ def df_report(file_path):
     global df
     df = pd.read_csv(file_path)
     print("The Dataset is stored in the variable" + "\033[1m" + " df" + "\033[0m" + ".")
+
+    # Printing out the first 5 rows of the Dataset.
+    print("To get a little overview on the data, here are the first 5 rows.")
+    print(df.head())
+
+    # Printing out the last 5 rows of the Dataset.
+    print("Further here are the last 5 rows of the Data.")
+    print(df.tail())
