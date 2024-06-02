@@ -28,3 +28,25 @@ def df_report(file_path):
     # Printing out the last 5 rows of the Dataset.
     print("Further here are the last 5 rows of the Data.")
     print(df.tail())
+
+    # Printing out the Information of the Pandas shape methode.
+    print("\033[1m" + "Dataset Shape Information" + "\033[0m")
+    global df_number_rows, df_number_columns, df_number_entries, df_number_missing_entries
+    df_number_rows = df.shape[0]
+    df_number_columns = df.shape[1]
+    df_number_entries = df.shape[0] * df.shape[1]
+    df_number_missing_entries = df.isnull().sum().sum()
+    print("The dataset has a total of:")
+    print("   " + "\033[1m", df_number_rows,
+          "rows." + "\033[0m" + " You can access on the number of rows through the variable " + "\033[1m" +
+          "df_number_rows." + "\033[0m")
+    print("   " + "\033[1m", df_number_columns,
+          "columns." + "\033[0m" + " You can access on the number of columns through the variable " + "\033[1m" +
+          "df_number_columns." + "\033[0m")
+    print("   " + "\033[1m", df_number_entries,
+          "entires." + "\033[0m" + " You can access on the number of entries through the variable " + "\033[1m" +
+          "df_number_entries." + "\033[0m")
+    print("   " + "\033[1m", df_number_missing_entries,
+          "missing entries" + "\033[0m" +
+          " in the whole dataset. You can access on the number of missing entries through the variable " + "\033[1m" +
+          "df_number_missing_entries." + "\033[0m")
