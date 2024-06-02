@@ -15,3 +15,8 @@ def df_report(file_path):
     split_list = file_path.split("/")
     file_name = split_list[len(split_list) - 1]
     print("This is a Report on the Dataset" + "\033[1m", file_name + ".", "\033[0m")
+
+    # Saving the Dataset in a global variable df.
+    global df
+    df = pd.read_csv(file_path)
+    print("The Dataset is stored in the variable" + "\033[1m" + " df" + "\033[0m" + ".")
