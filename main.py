@@ -56,8 +56,35 @@ def df_report(file_path):
     print("============================== " + "\033[1m" + "Columns" + "\033[0m" + " ==============================")
     global df_all_columns
     df_all_columns = list(df.columns)
-    print("Tha Dataset has the following", df_number_columns, "columns:\n" + "\033[1m", df_all_columns,
+    print("The Dataset has the following", df_number_columns, "columns:\n" + "\033[1m", df_all_columns,
           "\033[0m\n" + "The column labels are stored as a python list in the variable " + "\033[1m" + "df_all_columns." + "\033[0m")
-    print("The datatypes of the are:")
+    print("The datatypes of the columns are:")
     for col in df_all_columns:
         print("   ", col, ":", str(df[col].dtype))
+
+    # Printing all categorical columns, with all unique values for each column and there relative frequency.
+    print(
+        "============================== " + "\033[1m" + "Categorical Columns" + "\033[0m" +
+        " ==============================")
+    global df_categorical_columns
+    df_categorical_columns = [column for column in df_all_columns if df[column].dtype == "object"]
+    df_number_categorical_columns = len(df_categorical_columns)
+    print("The Dataset has the following", df_number_categorical_columns, "categorical columns:\n" + "\033[1m",
+          df_categorical_columns,
+          "\033[0m\n" + "The categorical column labels are stored as a python list in the variable " + "\033[1m" +
+          "df_categorical_columns." + "\033[0m")
+    for categorical_column in df_categorical_columns:
+        unique_values_in_column = list(df[categorical_column].unique())
+        count_unique_values = len(unique_values_in_column)
+        print("The column", "\033[1m" + categorical_column + "\033[0m", "has" + "\033[1m", count_unique_values,
+              "\033[0m" + "unique values:\n" + "\033[1m", unique_values_in_column, "\033[0m")
+        for unique_value in unique_values_in_column:
+            count_unique_value = df.loc[df[categorical_column] == unique_value].shape[0]
+            unique_value_relative_frequency = count_unique_value / df_number_rows
+            unique_value_relative_frequency_percent = round(unique_value_relative_frequency * 100, 3)
+            print("   The value" + "\033[1m", unique_value, "\033[0m" + "occurs" + "\033[1m", count_unique_value,
+                  "\033[0m" + "times out of" + "\033[1m", df_number_rows,
+                  "\033[0m." + " This is a relative frequency of" + "\033[1m",
+                  unique_value_relative_frequency, "\033[0m" + "or" + "\033[1m",
+                  unique_value_relative_frequency_percent,
+                  "%." + "\033[0m")
