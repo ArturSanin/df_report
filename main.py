@@ -14,7 +14,7 @@ def df_report(file_path):
     # created by the methode split.
     split_list = file_path.split("/")
     file_name = split_list[len(split_list) - 1]
-    print("This is a Report on the Dataset" + "\033[1m", file_name + ".", "\033[0m")
+    print("This is a report on the dataset" + "\033[1m", file_name + ".", "\033[0m")
 
     # Saving the Dataset in a global variable df.
     global df
@@ -29,8 +29,9 @@ def df_report(file_path):
     print("Further here are the last 5 rows of the Data.")
     print(df.tail())
 
-    # Printing out the Information of the Pandas shape methode.
-    print("\033[1m" + "Dataset Shape Information" + "\033[0m")
+    # Printing information about the shape of the dataset.
+    print(
+        "============================== " + "\033[1m" + "Dataset Shape" + "\033[0m" + " ==============================")
     global df_number_rows, df_number_columns, df_number_entries, df_number_missing_entries
     df_number_rows = df.shape[0]
     df_number_columns = df.shape[1]
@@ -48,5 +49,15 @@ def df_report(file_path):
           "df_number_entries." + "\033[0m")
     print("   " + "\033[1m", df_number_missing_entries,
           "missing entries" + "\033[0m" +
-          " in the whole dataset. You can access on the number of missing entries through the variable " + "\033[1m" +
+          " (in the whole dataset). You can access on the number of missing entries through the variable " + "\033[1m" +
           "df_number_missing_entries." + "\033[0m")
+
+    # Printing all column labels and the datatypes of the columns.
+    print("============================== " + "\033[1m" + "Columns" + "\033[0m" + " ==============================")
+    global df_all_columns
+    df_all_columns = list(df.columns)
+    print("Tha Dataset has the following", df_number_columns, "columns:\n" + "\033[1m", df_all_columns,
+          "\033[0m\n" + "The column labels are stored as a python list in the variable " + "\033[1m" + "df_all_columns." + "\033[0m")
+    print("The datatypes of the are:")
+    for col in df_all_columns:
+        print("   ", col, ":", str(df[col].dtype))
