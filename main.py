@@ -57,7 +57,8 @@ def df_report(file_path):
     global df_all_columns
     df_all_columns = list(df.columns)
     print("The Dataset has the following", df_number_columns, "columns:\n" + "\033[1m", df_all_columns,
-          "\033[0m\n" + "The column labels are stored as a python list in the variable " + "\033[1m" + "df_all_columns." + "\033[0m")
+          "\033[0m\n" + "The column labels are stored as a python list in the variable " + "\033[1m" +
+          "df_all_columns." + "\033[0m")
     print("The datatypes of the columns are:")
     for col in df_all_columns:
         print("   ", col, ":", str(df[col].dtype))
@@ -88,3 +89,45 @@ def df_report(file_path):
                   unique_value_relative_frequency, "\033[0m" + "or" + "\033[1m",
                   unique_value_relative_frequency_percent,
                   "%." + "\033[0m")
+
+    print(
+        "============================== " + "\033[1m" + "Numerical Columns" + "\033[0m" +
+        " ==============================")
+    global df_numerical_columns
+    df_numerical_columns = list(set(df_all_columns) - set(df_categorical_columns))
+    df_number_numerical_columns = len(df_numerical_columns)
+    print("The Dataset has the following", df_number_numerical_columns, "numerical columns:\n" + "\033[1m",
+          df_numerical_columns,
+          "\033[0m\n" + "The numerical column labels are stored as a python list in the variable " + "\033[1m" +
+          "df_numerical_columns." + "\033[0m")
+    for num_col in df_numerical_columns:
+        print("========== " + "\033[1m" + "Summary statistics of " + num_col + "\033[0m" + " ==========")
+        print("The dataset has a total of" + "\033[1m", df.describe()[num_col].iloc[0],
+              "non empty entries " + "\033[0m" + "in the column" + "\033[1m",
+              num_col, "\033[0m")
+        print("The column" + "\033[1m", num_col, "\033[0m" + "has a " + "\033[1m" + "mean of",
+              round(df.describe()[num_col].iloc[1], 2), "\033[0m")
+        print("The column" + "\033[1m", num_col, "\033[0m" + "has a standard deviation of" + "\033[1m",
+              round(df.describe()[num_col].iloc[2], 2), "\033[0m")
+        print("The " + "\033[1m" + "minimal value " + "\033[0m" + "of the column" + "\033[1m", num_col,
+              "\033[0m" + "is" + "\033[1m", df.describe()[num_col].iloc[3], "\033[0m")
+        print("The " + "\033[1m" + "25 percent quintile " + "\033[0m" "of column" + "\033[1m", num_col,
+              "\033[0m" + "is" + "\033[1m", df.describe()[num_col].iloc[4],
+              "\033[0m." + " This means, that 25 procent of the Data in the column" + "\033[1m", num_col,
+              "\033[0m" + "is less than" + "\033[1m", df.describe()[num_col].iloc[4],
+              "\033[0m" + "and 75 procent of the Data is over" + "\033[1m", df.describe()[num_col].iloc[4],
+              "\033[0m" + ".")
+        print("The " + "\033[1m" + "50 percent quintile " + "\033[0m" "of column" + "\033[1m", num_col,
+              "\033[0m" + "is" + "\033[1m", df.describe()[num_col].iloc[5],
+              "\033[0m." + " This means, that 50 procent of the Data in the column" + "\033[1m", num_col,
+              "\033[0m" + "is less than" + "\033[1m", df.describe()[num_col].iloc[5],
+              "\033[0m" + "and 50 procent of the Data is over" + "\033[1m", df.describe()[num_col].iloc[5],
+              "\033[0m" + ".")
+        print("The " + "\033[1m" + "75 percent quintile " + "\033[0m" "of column" + "\033[1m", num_col,
+              "\033[0m" + "is" + "\033[1m", df.describe()[num_col].iloc[6],
+              "\033[0m." + " This means, that 75 procent of the Data in the column" + "\033[1m", num_col,
+              "\033[0m" + "is less than" + "\033[1m", df.describe()[num_col].iloc[6],
+              "\033[0m" + "and 25 procent of the Data is over" + "\033[1m", df.describe()[num_col].iloc[6],
+              "\033[0m" + ".")
+        print("The " + "\033[1m" + "maximal value " + "\033[0m" + "of the column" + "\033[1m", num_col,
+              "\033[0m" + "is" + "\033[1m", df.describe()[num_col].iloc[7], "\033[0m")
