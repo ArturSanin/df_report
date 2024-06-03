@@ -96,38 +96,47 @@ def df_report(file_path):
     global df_numerical_columns
     df_numerical_columns = list(set(df_all_columns) - set(df_categorical_columns))
     df_number_numerical_columns = len(df_numerical_columns)
+    df_only_numerical_columns = df[df_numerical_columns]
+    df_correlations = df_only_numerical_columns.corr()
     print("The Dataset has the following", df_number_numerical_columns, "numerical columns:\n" + "\033[1m",
           df_numerical_columns,
           "\033[0m\n" + "The numerical column labels are stored as a python list in the variable " + "\033[1m" +
           "df_numerical_columns." + "\033[0m")
-    for num_col in df_numerical_columns:
-        print("========== " + "\033[1m" + "Summary statistics of " + num_col + "\033[0m" + " ==========")
-        print("The dataset has a total of" + "\033[1m", df.describe()[num_col].iloc[0],
+    # Printing summary statistics and correlations.
+    for numerical_column in df_numerical_columns:
+        df_removed_numerical_column = df_numerical_columns.copy()
+        df_removed_numerical_column.remove(numerical_column)
+        print("========== " + "\033[1m" + "Summary statistics of " + numerical_column + "\033[0m" + " ==========")
+        print("The dataset has a total of" + "\033[1m", df.describe()[numerical_column].iloc[0],
               "non empty entries " + "\033[0m" + "in the column" + "\033[1m",
-              num_col, "\033[0m")
-        print("The column" + "\033[1m", num_col, "\033[0m" + "has a " + "\033[1m" + "mean of",
-              round(df.describe()[num_col].iloc[1], 2), "\033[0m")
-        print("The column" + "\033[1m", num_col, "\033[0m" + "has a standard deviation of" + "\033[1m",
-              round(df.describe()[num_col].iloc[2], 2), "\033[0m")
-        print("The " + "\033[1m" + "minimal value " + "\033[0m" + "of the column" + "\033[1m", num_col,
-              "\033[0m" + "is" + "\033[1m", df.describe()[num_col].iloc[3], "\033[0m")
-        print("The " + "\033[1m" + "25 percent quintile " + "\033[0m" "of column" + "\033[1m", num_col,
-              "\033[0m" + "is" + "\033[1m", df.describe()[num_col].iloc[4],
-              "\033[0m." + " This means, that 25 procent of the Data in the column" + "\033[1m", num_col,
-              "\033[0m" + "is less than" + "\033[1m", df.describe()[num_col].iloc[4],
-              "\033[0m" + "and 75 procent of the Data is over" + "\033[1m", df.describe()[num_col].iloc[4],
+              numerical_column, "\033[0m")
+        print("The column" + "\033[1m", numerical_column, "\033[0m" + "has a " + "\033[1m" + "mean of",
+              round(df.describe()[numerical_column].iloc[1], 2), "\033[0m")
+        print("The column" + "\033[1m", numerical_column, "\033[0m" + "has a standard deviation of" + "\033[1m",
+              round(df.describe()[numerical_column].iloc[2], 2), "\033[0m")
+        print("The " + "\033[1m" + "minimal value " + "\033[0m" + "of the column" + "\033[1m", numerical_column,
+              "\033[0m" + "is" + "\033[1m", df.describe()[numerical_column].iloc[3], "\033[0m")
+        print("The " + "\033[1m" + "25% percentile " + "\033[0m" "of column" + "\033[1m", numerical_column,
+              "\033[0m" + "is" + "\033[1m", df.describe()[numerical_column].iloc[4],
+              "\033[0m." + " This means, that 25% of the Data in the column" + "\033[1m", numerical_column,
+              "\033[0m" + "is less than" + "\033[1m", df.describe()[numerical_column].iloc[4],
+              "\033[0m" + "and 75% of the Data is over" + "\033[1m", df.describe()[numerical_column].iloc[4],
               "\033[0m" + ".")
-        print("The " + "\033[1m" + "50 percent quintile " + "\033[0m" "of column" + "\033[1m", num_col,
-              "\033[0m" + "is" + "\033[1m", df.describe()[num_col].iloc[5],
-              "\033[0m." + " This means, that 50 procent of the Data in the column" + "\033[1m", num_col,
-              "\033[0m" + "is less than" + "\033[1m", df.describe()[num_col].iloc[5],
-              "\033[0m" + "and 50 procent of the Data is over" + "\033[1m", df.describe()[num_col].iloc[5],
+        print("The " + "\033[1m" + "50% percentile " + "\033[0m" "of column" + "\033[1m", numerical_column,
+              "\033[0m" + "is" + "\033[1m", df.describe()[numerical_column].iloc[5],
+              "\033[0m." + " This means, that 50% of the Data in the column" + "\033[1m", numerical_column,
+              "\033[0m" + "is less than" + "\033[1m", df.describe()[numerical_column].iloc[5],
+              "\033[0m" + "and 50% of the Data is over" + "\033[1m", df.describe()[numerical_column].iloc[5],
               "\033[0m" + ".")
-        print("The " + "\033[1m" + "75 percent quintile " + "\033[0m" "of column" + "\033[1m", num_col,
-              "\033[0m" + "is" + "\033[1m", df.describe()[num_col].iloc[6],
-              "\033[0m." + " This means, that 75 procent of the Data in the column" + "\033[1m", num_col,
-              "\033[0m" + "is less than" + "\033[1m", df.describe()[num_col].iloc[6],
-              "\033[0m" + "and 25 procent of the Data is over" + "\033[1m", df.describe()[num_col].iloc[6],
+        print("The " + "\033[1m" + "75% percentile " + "\033[0m" "of column" + "\033[1m", numerical_column,
+              "\033[0m" + "is" + "\033[1m", df.describe()[numerical_column].iloc[6],
+              "\033[0m." + " This means, that 75% of the Data in the column" + "\033[1m", numerical_column,
+              "\033[0m" + "is less than" + "\033[1m", df.describe()[numerical_column].iloc[6],
+              "\033[0m" + "and 25% of the Data is over" + "\033[1m", df.describe()[numerical_column].iloc[6],
               "\033[0m" + ".")
-        print("The " + "\033[1m" + "maximal value " + "\033[0m" + "of the column" + "\033[1m", num_col,
-              "\033[0m" + "is" + "\033[1m", df.describe()[num_col].iloc[7], "\033[0m")
+        print("The " + "\033[1m" + "maximal value " + "\033[0m" + "of the column" + "\033[1m", numerical_column,
+              "\033[0m" + "is" + "\033[1m", df.describe()[numerical_column].iloc[7], "\033[0m")
+        for rest_numerical_column in df_removed_numerical_column:
+            correlation = round(df_correlations[numerical_column][rest_numerical_column], 2)
+            print("The column" + "\033[1m", numerical_column, "\033[0m" + "has a correlation of" + "\033[1m",
+                  correlation, "\033[0m" + "with the column" + "\033[1m", rest_numerical_column, "\033[0m.")
